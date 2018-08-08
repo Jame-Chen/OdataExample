@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="SJZXEntities">
+    <EntitySetMapping Name="T_RIVER_R">
+      <EntityTypeMapping TypeName="Model.T_RIVER_R">
+        <MappingFragment StoreEntitySet="T_RIVER_R">
+          <ScalarProperty Name="N_ID" ColumnName="N_ID" />
+          <ScalarProperty Name="S_SCODE" ColumnName="S_SCODE" />
+          <ScalarProperty Name="S_SNAME" ColumnName="S_SNAME" />
+          <ScalarProperty Name="T_TM" ColumnName="T_TM" />
+          <ScalarProperty Name="N_Z" ColumnName="N_Z" />
+          <ScalarProperty Name="N_Q" ColumnName="N_Q" />
+          <ScalarProperty Name="N_XSA" ColumnName="N_XSA" />
+          <ScalarProperty Name="N_XSAVV" ColumnName="N_XSAVV" />
+          <ScalarProperty Name="N_XSMXV" ColumnName="N_XSMXV" />
+          <ScalarProperty Name="S_FLWCHRCD" ColumnName="S_FLWCHRCD" />
+          <ScalarProperty Name="S_WPTN" ColumnName="S_WPTN" />
+          <ScalarProperty Name="S_MSQMT" ColumnName="S_MSQMT" />
+          <ScalarProperty Name="S_MSAMT" ColumnName="S_MSAMT" />
+          <ScalarProperty Name="S_MSVMT" ColumnName="S_MSVMT" />
+          <ScalarProperty Name="S_CATEGORY" ColumnName="S_CATEGORY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

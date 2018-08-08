@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Attributes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="Interest" Type="nvarchar(max)" />
+    <Property Name="Hobbies" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ClassTab">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="EMP">
+    <Key>
+      <PropertyRef Name="EID" />
+    </Key>
+    <Property Name="EID" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="ENME" Type="varchar" MaxLength="10" />
+    <Property Name="BDATE" Type="datetime" />
+    <Property Name="SEX" Type="bit" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Sex" Type="int" />
+    <Property Name="Chinese" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Math" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="English" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ClassID" Type="int" />
+  </EntityType>
+  <EntityType Name="test">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="WORK">
+    <Key>
+      <PropertyRef Name="DID" />
+    </Key>
+    <Property Name="EID" Type="varchar" MaxLength="6" />
+    <Property Name="DID" Type="varchar" MaxLength="3" Nullable="false" />
+    <Property Name="STARTDATE" Type="datetime" />
+    <Property Name="SALARY" Type="int" />
+  </EntityType>
+  <!--生成过程中发现错误:
+警告 6002: 表/视图“test.dbo.V_Student”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+  <EntityType Name="V_Student">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="Chinese" />
+      <PropertyRef Name="Math" />
+      <PropertyRef Name="English" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Sex" Type="int" />
+    <Property Name="Chinese" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Math" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="English" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ClassID" Type="int" />
+    <Property Name="Expr1" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Student_ClassaTab">
+    <End Role="ClassTab" Type="Self.ClassTab" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClassTab">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="ClassID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentAttributes">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Attributes" Type="Self.Attributes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Attributes">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WORK">
+    <End Role="EMP" Type="Self.EMP" Multiplicity="0..1" />
+    <End Role="WORK" Type="Self.WORK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMP">
+        <PropertyRef Name="EID" />
+      </Principal>
+      <Dependent Role="WORK">
+        <PropertyRef Name="EID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="testModelStoreContainer">
+    <EntitySet Name="Attributes" EntityType="Self.Attributes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClassTab" EntityType="Self.ClassTab" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMP" EntityType="Self.EMP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="test" EntityType="Self.test" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WORK" EntityType="Self.WORK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="V_Student" EntityType="Self.V_Student" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[V_Student].[Id] AS [Id], 
+[V_Student].[Name] AS [Name], 
+[V_Student].[Age] AS [Age], 
+[V_Student].[Sex] AS [Sex], 
+[V_Student].[Chinese] AS [Chinese], 
+[V_Student].[Math] AS [Math], 
+[V_Student].[English] AS [English], 
+[V_Student].[ClassID] AS [ClassID], 
+[V_Student].[Expr1] AS [Expr1]
+FROM [dbo].[V_Student] AS [V_Student]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Student_ClassaTab" Association="Self.FK_Student_ClassaTab">
+      <End Role="ClassTab" EntitySet="ClassTab" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentAttributes" Association="Self.FK_StudentAttributes">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Attributes" EntitySet="Attributes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WORK" Association="Self.FK_WORK">
+      <End Role="EMP" EntitySet="EMP" />
+      <End Role="WORK" EntitySet="WORK" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

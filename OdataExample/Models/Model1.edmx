@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attributes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="Interest" Type="nvarchar(max)" />
+          <Property Name="Hobbies" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ClassTab">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EMP">
+          <Key>
+            <PropertyRef Name="EID" />
+          </Key>
+          <Property Name="EID" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="ENME" Type="varchar" MaxLength="10" />
+          <Property Name="BDATE" Type="datetime" />
+          <Property Name="SEX" Type="bit" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Sex" Type="int" />
+          <Property Name="Chinese" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Math" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="English" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ClassID" Type="int" />
+        </EntityType>
+        <EntityType Name="test">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="WORK">
+          <Key>
+            <PropertyRef Name="DID" />
+          </Key>
+          <Property Name="EID" Type="varchar" MaxLength="6" />
+          <Property Name="DID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="STARTDATE" Type="datetime" />
+          <Property Name="SALARY" Type="int" />
+        </EntityType>
+        <EntityType Name="YHTAB">
+          <Key>
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="YHID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="YHNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="YHTIME" Type="date" />
+          <Property Name="PERSON" Type="nvarchar" MaxLength="50" />
+          <Property Name="num" Type="int" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“test.dbo.V_Student”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="V_Student">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Chinese" />
+            <PropertyRef Name="Math" />
+            <PropertyRef Name="English" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Sex" Type="int" />
+          <Property Name="Chinese" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Math" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="English" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ClassID" Type="int" />
+          <Property Name="Expr1" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Student_ClassaTab">
+          <End Role="ClassTab" Type="Self.ClassTab" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassTab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentAttributes">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Attributes" Type="Self.Attributes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attributes">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WORK">
+          <End Role="EMP" Type="Self.EMP" Multiplicity="0..1" />
+          <End Role="WORK" Type="Self.WORK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMP">
+              <PropertyRef Name="EID" />
+            </Principal>
+            <Dependent Role="WORK">
+              <PropertyRef Name="EID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="testModelStoreContainer">
+          <EntitySet Name="Attributes" EntityType="Self.Attributes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassTab" EntityType="Self.ClassTab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMP" EntityType="Self.EMP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="test" EntityType="Self.test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WORK" EntityType="Self.WORK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YHTAB" EntityType="Self.YHTAB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="V_Student" EntityType="Self.V_Student" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[V_Student].[Id] AS [Id], 
+[V_Student].[Name] AS [Name], 
+[V_Student].[Age] AS [Age], 
+[V_Student].[Sex] AS [Sex], 
+[V_Student].[Chinese] AS [Chinese], 
+[V_Student].[Math] AS [Math], 
+[V_Student].[English] AS [English], 
+[V_Student].[ClassID] AS [ClassID], 
+[V_Student].[Expr1] AS [Expr1]
+FROM [dbo].[V_Student] AS [V_Student]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Student_ClassaTab" Association="Self.FK_Student_ClassaTab">
+            <End Role="ClassTab" EntitySet="ClassTab" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentAttributes" Association="Self.FK_StudentAttributes">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Attributes" EntitySet="Attributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WORK" Association="Self.FK_WORK">
+            <End Role="EMP" EntitySet="EMP" />
+            <End Role="WORK" EntitySet="WORK" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Attributes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="Interest" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Hobbies" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_StudentAttributes" FromRole="Attributes" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="ClassTab">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Student_ClassaTab" FromRole="ClassTab" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="EMP">
+          <Key>
+            <PropertyRef Name="EID" />
+          </Key>
+          <Property Name="EID" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ENME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BDATE" Type="DateTime" Precision="3" />
+          <Property Name="SEX" Type="Boolean" />
+          <NavigationProperty Name="WORK" Relationship="Self.FK_WORK" FromRole="EMP" ToRole="WORK" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Sex" Type="Int32" />
+          <Property Name="Chinese" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Math" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="English" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ClassID" Type="Int32" />
+          <NavigationProperty Name="Attributes" Relationship="Self.FK_StudentAttributes" FromRole="Student" ToRole="Attributes" />
+          <NavigationProperty Name="ClassTab" Relationship="Self.FK_Student_ClassaTab" FromRole="Student" ToRole="ClassTab" />
+        </EntityType>
+        <EntityType Name="test">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="WORK">
+          <Key>
+            <PropertyRef Name="DID" />
+          </Key>
+          <Property Name="EID" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="DID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="STARTDATE" Type="DateTime" Precision="3" />
+          <Property Name="SALARY" Type="Int32" />
+          <NavigationProperty Name="EMP" Relationship="Self.FK_WORK" FromRole="WORK" ToRole="EMP" />
+        </EntityType>
+        <EntityType Name="V_Student">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Chinese" />
+            <PropertyRef Name="Math" />
+            <PropertyRef Name="English" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Sex" Type="Int32" />
+          <Property Name="Chinese" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Math" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="English" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ClassID" Type="Int32" />
+          <Property Name="Expr1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_StudentAttributes">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Attributes" Type="Self.Attributes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attributes">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_ClassaTab">
+          <End Role="ClassTab" Type="Self.ClassTab" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassTab">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WORK">
+          <End Role="EMP" Type="Self.EMP" Multiplicity="0..1" />
+          <End Role="WORK" Type="Self.WORK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMP">
+              <PropertyRef Name="EID" />
+            </Principal>
+            <Dependent Role="WORK">
+              <PropertyRef Name="EID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="odataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Attributes" EntityType="Self.Attributes" />
+          <EntitySet Name="ClassTab" EntityType="Self.ClassTab" />
+          <EntitySet Name="EMP" EntityType="Self.EMP" />
+          <EntitySet Name="Student" EntityType="Self.Student" />
+          <EntitySet Name="test" EntityType="Self.test" />
+          <EntitySet Name="WORK" EntityType="Self.WORK" />
+          <EntitySet Name="V_Student" EntityType="Self.V_Student" />
+          <AssociationSet Name="FK_StudentAttributes" Association="Self.FK_StudentAttributes">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Attributes" EntitySet="Attributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_ClassaTab" Association="Self.FK_Student_ClassaTab">
+            <End Role="ClassTab" EntitySet="ClassTab" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WORK" Association="Self.FK_WORK">
+            <End Role="EMP" EntitySet="EMP" />
+            <End Role="WORK" EntitySet="WORK" />
+          </AssociationSet>
+          <EntitySet Name="YHTAB" EntityType="testModel.YHTAB" />
+        </EntityContainer>
+        <EntityType Name="YHTAB">
+          <Key>
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="YHID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="YHNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="YHTIME" Type="DateTime" Precision="0" />
+          <Property Name="PERSON" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="num" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="odataEntities">
+          <EntitySetMapping Name="Attributes">
+            <EntityTypeMapping TypeName="testModel.Attributes">
+              <MappingFragment StoreEntitySet="Attributes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Interest" ColumnName="Interest" />
+                <ScalarProperty Name="Hobbies" ColumnName="Hobbies" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassTab">
+            <EntityTypeMapping TypeName="testModel.ClassTab">
+              <MappingFragment StoreEntitySet="ClassTab">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMP">
+            <EntityTypeMapping TypeName="testModel.EMP">
+              <MappingFragment StoreEntitySet="EMP">
+                <ScalarProperty Name="EID" ColumnName="EID" />
+                <ScalarProperty Name="ENME" ColumnName="ENME" />
+                <ScalarProperty Name="BDATE" ColumnName="BDATE" />
+                <ScalarProperty Name="SEX" ColumnName="SEX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student">
+            <EntityTypeMapping TypeName="testModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Chinese" ColumnName="Chinese" />
+                <ScalarProperty Name="Math" ColumnName="Math" />
+                <ScalarProperty Name="English" ColumnName="English" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="test">
+            <EntityTypeMapping TypeName="testModel.test">
+              <MappingFragment StoreEntitySet="test">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WORK">
+            <EntityTypeMapping TypeName="testModel.WORK">
+              <MappingFragment StoreEntitySet="WORK">
+                <ScalarProperty Name="EID" ColumnName="EID" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
+                <ScalarProperty Name="SALARY" ColumnName="SALARY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_Student">
+            <EntityTypeMapping TypeName="testModel.V_Student">
+              <MappingFragment StoreEntitySet="V_Student">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Chinese" ColumnName="Chinese" />
+                <ScalarProperty Name="Math" ColumnName="Math" />
+                <ScalarProperty Name="English" ColumnName="English" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YHTAB">
+            <EntityTypeMapping TypeName="testModel.YHTAB">
+              <MappingFragment StoreEntitySet="YHTAB">
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="PERSON" ColumnName="PERSON" />
+                <ScalarProperty Name="YHTIME" ColumnName="YHTIME" />
+                <ScalarProperty Name="YHNAME" ColumnName="YHNAME" />
+                <ScalarProperty Name="YHID" ColumnName="YHID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

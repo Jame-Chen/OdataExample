@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="T_RIVER_R">
+    <Key>
+      <PropertyRef Name="N_ID" />
+    </Key>
+    <Property Name="N_ID" Type="Decimal" Precision="38" Scale="0" Nullable="false" />
+    <Property Name="S_SCODE" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+    <Property Name="S_SNAME" Type="String" MaxLength="38" FixedLength="false" Unicode="true" />
+    <Property Name="T_TM" Type="DateTime" />
+    <Property Name="N_Z" Type="Decimal" Precision="7" Scale="3" />
+    <Property Name="N_Q" Type="Decimal" Precision="9" Scale="3" />
+    <Property Name="N_XSA" Type="Decimal" Precision="9" Scale="3" />
+    <Property Name="N_XSAVV" Type="Decimal" Precision="5" Scale="3" />
+    <Property Name="N_XSMXV" Type="Decimal" Precision="5" Scale="3" />
+    <Property Name="S_FLWCHRCD" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="S_WPTN" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="S_MSQMT" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="S_MSAMT" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="S_MSVMT" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="S_CATEGORY" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="SJZXEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="T_RIVER_R" EntityType="Self.T_RIVER_R" />
+  </EntityContainer>
+</Schema>
